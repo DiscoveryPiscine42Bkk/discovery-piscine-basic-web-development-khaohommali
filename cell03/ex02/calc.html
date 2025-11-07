@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calcium</title>
+    <style>
+        * {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            gap: 10px;
+            text-align: center;
+        }
+
+        input {
+            padding: 6px;
+            font-size: 16px;
+            width: 140px;
+            text-align: center;
+        }
+
+        #operators {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+        }
+
+        #operators button {
+            width: 35px;
+            height: 35px;
+            font-size: 18px;
+            border-radius: 50%;
+            border: 1px solid gray;
+            cursor: pointer;
+            background: white;
+        }
+
+        #operators button.selected {
+            background: green;
+            color: white;
+        }
+
+        #calcBtn {
+            padding: 6px 16px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #answerBox {
+            width: 140px;
+            padding: 6px;
+            font-size: 18px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <input id="left" placeholder="Type here...">
+
+    <div id="operators">
+        <button id="plus" onclick="opchosing(1)">+</button>
+        <button id="minus" onclick="opchosing(2)">-</button>
+        <button id="multi" onclick="opchosing(3)">*</button>
+        <button id="slash" onclick="opchosing(4)">/</button>
+    </div>
+
+    <input id="right" placeholder="Type here...">
+
+    <input type="submit" id="calcBtn" value="Try me!" onclick="calcu()">
+
+    <input id="answerBox" placeholder="Answer..." readonly>
+
+    <script>
+        let op = 0;
+
+        function calcu() {
+            let x = parseFloat(document.getElementById("left").value);
+            let y = parseFloat(document.getElementById("right").value);
+            let answar = "";
+
+            if (!isNaN(x) && !isNaN(y)) {
+                if (y === 0 && op === 4) {
+                    answar = "It's over 9000!";
+                } else if (op === 1) answar = x + y;
+                else if (op === 2) answar = x - y;
+                else if (op === 3) answar = x * y;
+                else if (op === 4) answar = x / y;
+                else answar = "Choose operator ↑";
+            } else {
+                answar = "Error :(";
+            }
+
+            document.getElementById("answerBox").value = answar;
+        }
+
+        function opchosing(o) {
+            op = o;
+            document.querySelectorAll("#operators button").forEach(btn => btn.classList.remove("selected"));
+            document.querySelectorAll("#operators button")[o - 1].classList.add("selected");
+        }
+    </script>
+
+</body>
+</html>
